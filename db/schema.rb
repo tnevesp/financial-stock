@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108222942) do
+ActiveRecord::Schema.define(version: 20170908234612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "carteiras", force: :cascade do |t|
+    t.date     "data_da_compra"
+    t.integer  "empresa_id"
+    t.integer  "user_id"
+    t.decimal  "entrada",         precision: 11, scale: 2
+    t.decimal  "alvo",            precision: 11, scale: 2
+    t.decimal  "stop",            precision: 11, scale: 2
+    t.decimal  "atual",           precision: 5,  scale: 2
+    t.integer  "quantidade"
+    t.string   "situacao"
+    t.decimal  "total_da_compra", precision: 11, scale: 2
+    t.decimal  "total_da_venda",  precision: 11, scale: 2
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.index ["empresa_id"], name: "index_carteiras_on_empresa_id", using: :btree
+    t.index ["user_id"], name: "index_carteiras_on_user_id", using: :btree
+  end
+
+  create_table "empresas", force: :cascade do |t|
+    t.string   "nome"
+    t.string   "ticker"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "papers", force: :cascade do |t|
     t.string   "name"
@@ -54,12 +79,17 @@ ActiveRecord::Schema.define(version: 20161108222942) do
     t.decimal  "purchased_price", precision: 8, scale: 2
     t.integer  "quantity"
     t.date     "purchased_at"
+    t.date     "sold_at"
+    t.decimal  "sold_price",      precision: 8, scale: 2
+    t.string   "status"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.index ["paper_id"], name: "index_wallets_on_paper_id", using: :btree
     t.index ["user_id"], name: "index_wallets_on_user_id", using: :btree
   end
 
+  add_foreign_key "carteiras", "empresas"
+  add_foreign_key "carteiras", "users"
   add_foreign_key "wallets", "papers"
   add_foreign_key "wallets", "users"
 end

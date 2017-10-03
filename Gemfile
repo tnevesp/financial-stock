@@ -55,3 +55,11 @@ gem 'font-awesome-rails', '~> 4.7'
 
 # bootstrap-sass is a Sass-powered version of Bootstrap 3, ready to drop right into your Sass powered applications.
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
+
+# A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions: get, put, post, delete.
+gem 'rest-client', '~> 2.0'
+
+
+gem 'simple_form', '~> 3.4'
+
+gem 'state_machines', '~> 0.5.0'

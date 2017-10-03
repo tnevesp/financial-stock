@@ -6,7 +6,9 @@ class CreateWallets < ActiveRecord::Migration[5.0]
       t.decimal :purchased_price, :precision => 8, :scale => 2
       t.integer :quantity
       t.date :purchased_at
-
+      t.date :sold_at
+      t.decimal :sold_price, :precision => 8, :scale => 2
+      t.string :status
       t.timestamps
     end
   end
