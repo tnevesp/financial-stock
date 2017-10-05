@@ -7,10 +7,18 @@ class Carteira < ApplicationRecord
     :quantidade,
     presence: true
 
-  state_machine :situacao, initial: :em_andamento do
- 		event :encerrar do
- 			transition :em_andamento => :encerrado
- 		end
+  validates :data_da_venda,
+  	presence: true,
+  	if: Proc.new { |klass| !klass.em_andamento? }
+
+  # state_machine :situacao, initial: :em_andamento do
+ 	# 	event :encerrar do
+ 	# 		transition :em_andamento => :encerrado
+ 	# 	end
+ 	# end
+
+ 	def situacao33
+ 		self.situacao ||= 'em_andamento'
  	end
 
  	def valorizacao
@@ -23,10 +31,14 @@ class Carteira < ApplicationRecord
 
  	def risco
  		(((self.entrada - self.stop) / self.entrada) * 100.0) * -1
+ 	rescue
+ 		0.0
  	end
 
  	def retorno
  		((self.alvo - self.entrada) / self.alvo) * 100.0
+ 	rescue
+ 		0.0
  	end
 
  	def ganho
@@ -39,5 +51,13 @@ class Carteira < ApplicationRecord
 
  	def valor_total_da_entrada
  		self.entrada * self.quantidade
+ 	end
+
+ 	def em_andamento?
+ 		self.situacao != 'encerrado'
+ 	end
+
+ 	def encerrado?
+ 		self.situacao == 'encerrado'
  	end
 end

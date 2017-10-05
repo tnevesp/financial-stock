@@ -4,7 +4,11 @@ class CarteirasController < ApplicationController
   # GET /carteiras
   # GET /carteiras.json
   def index
-    @carteiras = Carteira.all
+    if params[:situacao].blank? || params[:situacao] == 'todos'
+      @carteiras = Carteira.all.order(data_da_compra: :asc, id: :desc)
+    else
+      @carteiras = Carteira.where(situacao: params[:situacao]).order(data_da_compra: :asc, id: :desc)
+    end
   end
 
   # GET /carteiras/1
@@ -25,7 +29,6 @@ class CarteirasController < ApplicationController
   # POST /carteiras.json
   def create
     @carteira = Carteira.new(carteira_params)
-
     respond_to do |format|
       if @carteira.save
         format.html { redirect_to carteiras_path, notice: 'Carteira was successfully created.' }
@@ -70,6 +73,6 @@ class CarteirasController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def carteira_params
       params[:carteira].merge!(user_id: current_user.id)
-      params.require(:carteira).permit(:data_da_compra, :empresa_id, :entrada, :alvo, :stop, :atual, :quantidade, :user_id)
+      params.require(:carteira).permit(:data_da_compra, :empresa_id, :entrada, :alvo, :stop, :atual, :quantidade, :user_id, :data_da_venda, :situacao)
     end
 end

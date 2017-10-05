@@ -44,10 +44,35 @@ empresa_ids = {}
 	['DIRECIONAL', 'DIRR3'],
 	['SLC AGRICOLA', 'SLCE3'],
 	['ITAU UNIBANCO', 'ITUB4'],
-	['LOJAS RENNER', 'LREN3']
+	['LOJAS RENNER', 'LREN3'],
+	['Alpargatas SA Preference Shares', 'alpa4'],
+	['Tegma Gestao Logistica SA', 'TGMA3'],
+	['Construtora Tenda SA', 'TEND3'],
+	['Companhia de Ferro Ligas da Bah Frbs Preference Shares', 'FESA4'],
+	['Industrias Romi SA', 'ROMI3'],
+	['Profarma Distribuidora de Produts Frm SA', 'PFRM3'],
+	['Magnesita Refratarios SA', 'MAGG3'],
+	['Cosan Logistica SA', 'RLOG3'],
+	['Portobello S.A.', 'PTBL3'],
+	['Companhia Energetica de Minas Gers CEMIG Preference Shares', 'CMIG4'],
+	['Valid Solucoes E Servicos De Seguranca', 'VLID3'],
+	['Companhia Energética de São Paulo', 'CESP6'],
+	['Companhia Hering', 'HGTX3'],
+	['Banco Santander Brasil SA Brazilian Units', 'SANB11'],
+	['TIM Participacoes SA', 'TIMP3'],
+	['Banrisul', 'BRSR6'],
+	['Gaec Educação SA', 'ANIM3'],
+	['Multiplus SA', 'MPLU3'],
+	['Mills Estruturas Servicos', 'MILS3'],
+	['MRV Engenharia e Participacoes SA', 'MRVE3'],
+	['Rumo SA', 'RAIL3'],
+	['Iguatemi Empresa de Shopping Centers SA', 'IGTA3'],
+	['Companhia Siderurgica Nacional', 'CSNA3'],
+	['Ecorodovias Infraestrutura e Logistic SA', 'ECOR3']
 ].each do |nome, ticker|
-	empresa = Empresa.create(nome: nome, ticker: ticker)
-	empresa_ids.merge!({ticker.downcase.to_sym => empresa.id})
+	empresa = Empresa.find_or_initialize_by(nome: nome.upcase, ticker: ticker.upcase)
+	#empresa_ids.merge!({ticker.downcase.to_sym => empresa.id})
+	empresa.save
 end
 
 # unless user.nil?

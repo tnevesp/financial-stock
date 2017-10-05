@@ -30,3 +30,6 @@ en:
   quantidade: 'Quant.'
   porcentagem: '%'
   total: 'Total'
+  em_andamento: 'Em andamento'
+  encerrado: 'Encerrado'
+  todos: 'Todos'

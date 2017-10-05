@@ -20,6 +20,12 @@
                 <%= f.input :stop %>
                 <%= f.input :atual %>
                 <%= f.input :quantidade %>
+                <%= f.collection_radio_buttons :situacao, [['em_andamento', 'Em andamento'] ,['encerrado', 'Encerrado']], :first, :last, checked: (f.object.situacao || 'em_andamento') do |b| %>
+                  <div class="radio radio-primary radio-inline">
+                    <%= b.radio_button + b.label %>
+                  </div>
+                <% end %>
+                <%= f.input :data_da_venda, input_html: { disabled: (f.object.em_andamento?) } %>
               </div>
 
               <div class="form-actions">
@@ -32,3 +38,15 @@
     </div>
   </div>
 </div>
+
+<%= content_for :javascript do %>
+  <script type="text/javascript">
+    $('input[name="carteira[situacao]"]').on('click', function(){
+      if($('#carteira_situacao_em_andamento').is(':checked')){
+        $('select[name^="carteira[data_da_venda"]').prop('disabled', true);
+      } else {
+        $('select[name^="carteira[data_da_venda"]').removeAttr('disabled');
+      }
+    });
+  </script>
+<% end %>

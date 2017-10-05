@@ -87,9 +87,9 @@
           <div class="row">
             <div class="col-sm-9 m-b-xs">
               <div data-toggle="buttons" class="btn-group">
-                <label class="btn btn-sm btn-white"> <input type="radio" id="option1" name="options"><%= t(:dia) %></label>
-                <label class="btn btn-sm btn-white active"> <input type="radio" id="option2" name="options"><%= t(:semana) %></label>
-                <label class="btn btn-sm btn-white"> <input type="radio" id="option3" name="options"><%= t(:mes) %></label>
+                <label class="btn btn-sm btn-white <%= 'active' if params[:situacao] == 'em_andamento' %>"> <input type="radio" id="filtro_situacao_em_andamento" name="filtro[situacao]" value="em_andamento"><%= t(:em_andamento) %></label>
+                <label class="btn btn-sm btn-white <%= 'active' if params[:situacao] == 'encerrado' %>"> <input type="radio" id="filtro_situacao_encerrado" name="filtro[situacao]" value="encerrado"><%= t(:encerrado) %></label>
+                <label class="btn btn-sm btn-white <%= 'active' if params[:situacao].nil? %>"> <input type="radio" id="filtro_situacao_todos" name="filtro[situacao]" value="todos"><%= t(:todos) %></label>
               </div>
             </div>
             <div class="col-sm-3">
@@ -117,6 +117,7 @@
               </tr>
               </thead>
               <tbody>
+              <% total = 0.0 %>
               <% @carteiras.each do |carteira| %>
                 <tr>
                   <td><%= carteira.empresa.ticker %></td>
@@ -133,14 +134,32 @@
                   <td><%= numero_para_porcentagem(carteira.valorizacao) %></td>
                   
                     <td>
-                        Em andamento
+                      <span class="label <%= 'label-success' if carteira.em_andamento? %>"><%= t(carteira.situacao.to_sym) %></span>
                     </td>
                   <td><p class="text-right"><%= number_to_currency_br carteira.ganho %></p></td>
-                  <td><%= link_to 'Edit', edit_carteira_path(carteira) %></td>
+                  <% total += carteira.ganho %>
+                  <td>
+                    <%= link_to edit_carteira_path(carteira), { class: 'btn btn-white btn-sm' } do %>
+                      <i class="fa fa-pencil"></i> Editar </a>                      
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
               </tbody>
-              
+              <tfoot>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th><p class="text-right"><%= number_to_currency_br total %></p></th>
+                <th></th>
+              </tfoot>
             </table>
           </div>
         </div>
@@ -148,3 +167,9 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $('.btn-sm').on('click', function(){
+    window.location.replace('/?situacao=' + $(this).find('input[name="filtro[situacao]"]').val());
+  });
+</script>
