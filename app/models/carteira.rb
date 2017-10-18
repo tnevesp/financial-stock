@@ -17,12 +17,9 @@ class Carteira < ApplicationRecord
  	# 	end
  	# end
 
- 	def situacao33
- 		self.situacao ||= 'em_andamento'
- 	end
-
  	def valorizacao
- 		(1.0 - (self.entrada / self.atual)) * 100.0
+ 		#(1.0 - (self.entrada / self.atual)) * 100.0
+    ((self.atual - self.entrada) / self.entrada) * 100.0 
  	end
 
  	def valorizacao_positiva?
@@ -30,13 +27,13 @@ class Carteira < ApplicationRecord
  	end
 
  	def risco
- 		(((self.entrada - self.stop) / self.entrada) * 100.0) * -1
+ 		((self.stop - self.entrada) / self.entrada) * 100.0
  	rescue
  		0.0
  	end
 
  	def retorno
- 		((self.alvo - self.entrada) / self.alvo) * 100.0
+ 		((self.alvo - self.entrada) / self.entrada) * 100.0
  	rescue
  		0.0
  	end
