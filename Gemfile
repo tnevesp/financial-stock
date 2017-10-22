@@ -63,3 +63,5 @@ gem 'rest-client', '~> 2.0'
 gem 'simple_form', '~> 3.4'
 
 gem 'state_machines', '~> 0.5.0'
+
+gem 'sidekiq'
