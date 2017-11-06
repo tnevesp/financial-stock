@@ -68,7 +68,11 @@ empresa_ids = {}
 	['Rumo SA', 'RAIL3'],
 	['Iguatemi Empresa de Shopping Centers SA', 'IGTA3'],
 	['Companhia Siderurgica Nacional', 'CSNA3'],
-	['Ecorodovias Infraestrutura e Logistic SA', 'ECOR3']
+	['Ecorodovias Infraestrutura e Logistic SA', 'ECOR3'],
+	['GERDAU S.A', 'GGBR4'],
+	['VALE', 'VALE3'],
+	['UNICASA Industria de Moveis S/A', 'UCAS3'],
+	['TPI Triunfo Participacoes e Invest. SA', 'TPIS3']
 ].each do |nome, ticker|
 	empresa = Empresa.find_or_initialize_by(nome: nome.upcase, ticker: ticker.upcase)
 	#empresa_ids.merge!({ticker.downcase.to_sym => empresa.id})

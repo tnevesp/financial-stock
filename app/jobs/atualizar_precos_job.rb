@@ -9,7 +9,13 @@ class AtualizarPrecosJob < ApplicationJob
     		symbol = resultado['symbol'].split('.').first
     		empresa = Empresa.where(ticker: symbol).first
     		empresa.carteiras.where(situacao: 'em_andamento').each do |carteira|
-    			carteira.update(atual: resultado['LastTradePriceOnly'].to_f) unless resultado['LastTradePriceOnly'].blank?
+    			unless resultado['LastTradePriceOnly'].blank?
+    				carteira.update(atual: resultado['LastTradePriceOnly'].to_f)
+    			else
+    				puts "*"*80
+    				puts "#{resultado['symbol']} não atualizou"
+    				puts "*"*80
+    			end
     		end
     	end
     end

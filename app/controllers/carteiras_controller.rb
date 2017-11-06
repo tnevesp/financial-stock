@@ -4,7 +4,9 @@ class CarteirasController < ApplicationController
   # GET /carteiras
   # GET /carteiras.json
   def index
-    if params[:situacao].blank? || params[:situacao] == 'todos'
+    if params[:situacao].blank?
+      @carteiras = Carteira.where(situacao: 'em_andamento').order(data_da_compra: :asc, id: :desc)
+    elsif params[:situacao] == 'todos'
       @carteiras = Carteira.all.order(data_da_compra: :asc, id: :desc)
     else
       @carteiras = Carteira.where(situacao: params[:situacao]).order(data_da_compra: :asc, id: :desc)
