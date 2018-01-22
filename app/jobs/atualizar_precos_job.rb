@@ -4,6 +4,10 @@ class AtualizarPrecosJob < ApplicationJob
   def perform(*args)
     tickers = Carteira.where(situacao: 'em_andamento').map{ |c| c.empresa.ticker }.uniq
     unless tickers.blank?
+        puts "*"*80
+        puts tickers.map{ |t| t + '.SA' }
+        puts "*"*80
+
     	resultados = YahooFinanceAPI.consulta(tickers.map{ |t| t + '.SA' })
     	resultados.each do |resultado|
     		symbol = resultado['symbol'].split('.').first

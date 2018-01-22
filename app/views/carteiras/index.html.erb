@@ -32,22 +32,22 @@
           <div class="ibox float-e-margins">
               <div class="ibox-title">
                   <span class="label label-primary pull-right">Today</span>
-                  <h5>visits</h5>
+                  <h5>Rendimentos</h5>
               </div>
               <div class="ibox-content">
 
                   <div class="row">
                       <div class="col-md-4">
-                          <h1 class="no-margins">406,42</h1>
-                          <div class="font-bold text-navy">44% <i class="fa fa-level-up"></i> <small>Rapid pace</small></div>
+                          <h1 class="no-margins"><%= valor_do_rendimento_em_andamento %></h1>
+                          <div class="font-bold text-navy"><%= porcentagem_do_rendimento_em_andamento %> <i class="fa fa-level-up"></i> <small>Em andamento</small></div>
                       </div>
                       <div class="col-md-4">
-                          <h1 class="no-margins">206,12</h1>
-                          <div class="font-bold text-navy">22% <i class="fa fa-level-up"></i> <small>Slow pace</small></div>
+                          <h1 class="no-margins"><%= valor_do_rendimento_encerrado %></h1>
+                          <div class="font-bold text-navy"><%= porcentagem_do_rendimento_encerrado %> <i class="fa fa-level-up"></i> <small>Encerradas</small></div>
                       </div>
                       <div class="col-md-4">
-                          <h1 class="no-margins">206,12</h1>
-                          <div class="font-bold text-navy">22% <i class="fa fa-level-up"></i> <small>Slow pace</small></div>
+                          <h1 class="no-margins"><%= valor_do_rendimento_geral %></h1>
+                          <div class="font-bold text-navy"><%= porcentagem_do_rendimento_geral %> <i class="fa fa-level-up"></i> <small>Total</small></div>
                       </div>
                   </div>
 
@@ -174,4 +174,26 @@
   $('.btn-sm').on('click', function(){
     window.location.replace('/?situacao=' + $(this).find('input[name="filtro[situacao]"]').val());
   });
+
+  $(document).ready(function(){
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "progressBar": false,
+      "preventDuplicates": true,
+      "positionClass": "toast-top-center",
+      "onclick": null,
+      "showDuration": "4000",
+      "hideDuration": "1000",
+      "timeOut": "7000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+
+    toastr.info("cotações", "Atualizado...")
+  });
+  
 </script>

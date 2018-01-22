@@ -7,10 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 user = User.find_or_initialize_by(email: 'tnevesp@gmail.com')
-user.password = 'abc,123'
-user.password_confirmation = 'abc,123'
-user.confirmed_at = Date.today
-user.save
+unless user.persisted?
+	user.password = 'abc,123'
+	user.password_confirmation = 'abc,123'
+	user.confirmed_at = Date.today
+	user.save
+end
 
 empresa_ids = {}
 [
@@ -28,7 +30,7 @@ empresa_ids = {}
 	['JBS', 'JBSS3'],
 	['GERDAU', 'GOAU4'],
 	['VALE', 'VALE5'],
-	['ELETROPAULO', 'ELPL4'],
+	['ELETROPAULO', 'ELPL3'],
 	['SMILES', 'SMLE3'],
 	['MOVIDA', 'MOVI3'],
 	['B2W DIGITAL', 'BTOW3'],
@@ -72,7 +74,19 @@ empresa_ids = {}
 	['GERDAU S.A', 'GGBR4'],
 	['VALE', 'VALE3'],
 	['UNICASA Industria de Moveis S/A', 'UCAS3'],
-	['TPI Triunfo Participacoes e Invest. SA', 'TPIS3']
+	['TPI Triunfo Participacoes e Invest. SA', 'TPIS3'],
+	['Companhia de Saneamento do Parana SANEPAR ', 'SAPR4'],
+	['Instituto Hermes Pardini SA', 'PARD3'],
+	['IRB Brasil Resseguros SA', 'IRBR3'],
+	['Magazine Luiza', 'MGLU3'],
+	['Eneva SA', 'ENEV3'],
+	['WEG S.A.', 'WEGE3'],
+	['M. Dias Branco', 'MDIA3'],
+	['Hypermarcas', 'HYPE3'],
+	['Randon SA Implementos e Participacoes Preference Shares', 'RAPT4'],
+	['SCHULZ S.A', 'SHUL4'],
+	['BRASKEM S.A', 'BRKM5'],
+	['BK Brasil Operacao E Assessoria A Restaurantes SA', 'BKBR3']
 ].each do |nome, ticker|
 	empresa = Empresa.find_or_initialize_by(nome: nome.upcase, ticker: ticker.upcase)
 	#empresa_ids.merge!({ticker.downcase.to_sym => empresa.id})

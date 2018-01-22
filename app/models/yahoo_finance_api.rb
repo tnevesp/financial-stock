@@ -19,7 +19,7 @@ class YahooFinanceAPI
                 'LastTradeDate'
                 ]
     end
-
+puts url
     response = RestClient.get url
     Hash.from_xml(response.body)['query']['results']['quote']
   end
