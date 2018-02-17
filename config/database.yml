@@ -22,8 +22,14 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
-  database: stock_production
+  adapter: postgresql
+  encoding: unicode
+  database: d5sgrdjrphif3c
+  pool: 5
+  username: blxwbjrniyvgbd
+  password: d1ca5d0acadbac5901ed2b12b0261865d042b3010742cc5a630823bffd7d0412
+  host: ec2-54-235-64-195.compute-1.amazonaws.com
+  port: 5432
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
