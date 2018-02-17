@@ -5,10 +5,11 @@ class CarteirasController < ApplicationController
   # GET /carteiras.json
   def index
     if params[:situacao].blank?
-      @carteiras = Carteira.where(situacao: 'em_andamento').order(data_da_compra: :asc, id: :desc)
+      @carteiras = Carteira.joins(:empresa).where(situacao: 'em_andamento').order('empresas.ticker asc, carteiras.data_da_compra asc')
     elsif params[:situacao] == 'todos'
       @carteiras = Carteira.all.order(data_da_compra: :asc, id: :desc)
     else
+      # .where(["to_char(data_da_venda, 'MM/YYYY') = ?", "01/2018"])
       @carteiras = Carteira.where(situacao: params[:situacao]).order(data_da_compra: :asc, id: :desc)
     end
   end
