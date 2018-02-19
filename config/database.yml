@@ -24,11 +24,11 @@ default: &default
 development:
   adapter: postgresql
   encoding: unicode
-  database: d5sgrdjrphif3c
+  database: d6nul86mnm7cjd
   pool: 5
-  username: blxwbjrniyvgbd
-  password: d1ca5d0acadbac5901ed2b12b0261865d042b3010742cc5a630823bffd7d0412
-  host: ec2-54-235-64-195.compute-1.amazonaws.com
+  username: ynafowpambowao
+  password: c2df5bd912c8a4a3e7196f99bf17f7f20776a2a1054595cf9cc86d5f3fa428fb
+  host: ec2-54-163-234-99.compute-1.amazonaws.com
   port: 5432
 
   # The specified database role being used to connect to postgres.
