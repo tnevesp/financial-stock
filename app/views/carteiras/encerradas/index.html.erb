@@ -1,0 +1,88 @@
+<style type="text/css">
+  
+
+.label-xp, .badge-xp {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.label-bb, .badge-bb {
+  background-color: #FFF200;
+  color: #004486;
+}
+</style>
+<div class="wrapper wrapper-content">
+
+  <%= render partial: 'carteiras/demonstrativos' %>
+
+  <div class="row">
+
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h1>Encerradas</h1>
+        <div class="ibox-content">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                
+                <th></th>
+                <th></th>
+                <th>Ticker</th>
+                <th>Empresa</th>
+                <th><p class="text-right">Quantidade</th>
+                <th><p class="text-right">Data da compra</th>
+                <th><p class="text-right">Data da venda</th>
+                <th><p class="text-right">Preço compra</p></th>
+                <th><p class="text-right">Atual</p></th>
+                <th><p class="text-right">Valorização</p></th>
+                <th><p class="text-right">Retorno</p></th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% total = 0.0 %>
+              <% @carteiras.each do |carteira| %>
+                <tr>
+                  <td><%= corretora_label(carteira.corretora) %></td>
+                  <td><%= tipo_de_operacao_label(carteira.tipo_de_operacao) %></td>
+                  
+                  <td><%= carteira.empresa.ticker %></td>
+                  <td><%= carteira.empresa.nome %></td>
+                  <td class="text-right"><%= carteira.quantidade %></td>
+                  <td class="text-right"><%= carteira.data_da_compra.to_date.strftime('%d/%m/%Y') %></td>
+                  <td class="text-right"><%= carteira.data_da_venda&.to_date&.strftime('%d/%m/%Y') %></td>
+                  <td><p class="text-right"><%= number_to_currency_br carteira.entrada %></p></td>
+                  <td><p class="text-right"><%= number_to_currency_br carteira.atual %></p></td>
+                  <td><%= numero_para_porcentagem(carteira.valorizacao) %></td>
+                  <td><p class="text-right"><%= number_to_currency_br carteira.ganho %></p></td>
+                  <% total += carteira.ganho %>
+                  <td>
+                    <%= link_to edit_carteira_path(carteira), { class: 'btn btn-white btn-sm' } do %>
+                      <i class="fa fa-pencil"></i> Editar </a>                      
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+              <tfoot>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th><th></th>
+                <th></th>
+                <th><p class="text-right"><%= number_to_currency_br total %></p></th>
+                <th></th>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

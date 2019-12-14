@@ -21,21 +21,21 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-# development:
-#   <<: *default
-#   database: stock_production
-
-
-
 development:
-  adapter: postgresql
-  encoding: unicode
-  database: d6nul86mnm7cjd
-  pool: 5
-  username: ynafowpambowao
-  password: c2df5bd912c8a4a3e7196f99bf17f7f20776a2a1054595cf9cc86d5f3fa428fb
-  host: ec2-54-163-234-99.compute-1.amazonaws.com
-  port: 5432
+  <<: *default
+  database: stock_production
+
+
+
+# development:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: d6nul86mnm7cjd
+#   pool: 5
+#   username: ynafowpambowao
+#   password: c2df5bd912c8a4a3e7196f99bf17f7f20776a2a1054595cf9cc86d5f3fa428fb
+#   host: ec2-54-163-234-99.compute-1.amazonaws.com
+#   port: 5432
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.

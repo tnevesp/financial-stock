@@ -30,12 +30,24 @@
                 </div>
             </li>
             <li class="<%= is_active_controller('dashboards') %>">
-                <%= link_to carteiras_path do %>
-                  <i class="fa fa-th-large"></i> <span class="nav-label">Ações</span>
+                <%= link_to paineis_path do %>
+                  <i class="fa fa-th-large"></i> <span class="nav-label">Painel</span>
                 <% end %>
 
                 <%= link_to new_carteira_path do %>
-                  <i class="fa fa-th-large"></i> <span class="nav-label">Adicionar</span>
+                  <i class="fa fa-cart-plus"></i> <span class="nav-label">Adicionar</span>
+                <% end %>
+
+                <%= link_to em_andamentos_path do %>
+                  <i class="fa fa-line-chart"></i> <span class="nav-label">Em andamento</span>
+                <% end %>
+
+                <%= link_to concentrado_em_andamentos_path do %>
+                  <i class="fa fa-hand-lizard-o"></i> <span class="nav-label">Em andamento (Concentrado)</span>
+                <% end %>
+
+                <%= link_to encerradas_path do %>
+                  <i class="fa fa-gavel"></i> <span class="nav-label">Encerradas</span>
                 <% end %>
             </li>
         </ul>

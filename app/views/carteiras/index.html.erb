@@ -1,4 +1,30 @@
+<style type="text/css">
+  
+
+.label-xp, .badge-xp {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.label-bb, .badge-bb {
+  background-color: #FFF200;
+  color: #004486;
+}
+</style>
 <div class="wrapper wrapper-content">
+
+  <div class="row">
+      <div class="col-lg-6">
+          <div class="chartjs-begining" id="chartjs-5">
+            
+          </div>
+      </div>
+      <div class="col-lg-6">
+      
+      </div>
+  </div>
+
+  <script>new Chart(document.getElementById("chartjs-5"),{"type":"polarArea","data":{"labels":["Red","Green","Yellow","Grey","Blue"],"datasets":[{"label":"My First Dataset","data":[11,16,7,3,14],"backgroundColor":["rgb(255, 99, 132)","rgb(75, 192, 192)","rgb(255, 205, 86)","rgb(201, 203, 207)","rgb(54, 162, 235)"]}]}});</script>
 
   <div class="row">
       <div class="col-lg-3">
@@ -72,10 +98,10 @@
             </a>
             <ul class="dropdown-menu dropdown-user">
                 <li>
-                    <a href="#">Config option 1</a>
+                  <%= link_to 'Atualizar preços', atualizar_precos_carteiras_path, { class: 'atualizacao-de-precos' } %>
                 </li>
                 <li>
-                    <a href="#">Config option 2</a>
+                  <%= link_to 'Filtrar', '#', { 'data-toggle' => 'modal', 'data-target' => '#filtroModal' } %>
                 </li>
             </ul>
             <a class="close-link">
@@ -93,13 +119,16 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <%= select_tag :data, option_from_collection_for_select_data %>
+              <%= select_tag 'filtro[data_de_encerramento]', options_for_select(option_from_collection_for_select_data), { include_blank: 'Data de encerramento', class: 'carteira-filtro form-control' } %>
             </div>
           </div>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
               <tr>
+                
+                <th></th>
+                <th></th>
                 <th>Ticker</th>
                 <th>Empresa</th>
                 <!-- <th><p class="text-right">Quantidade</p></th>
@@ -110,8 +139,14 @@
                 
                 <th><p class="text-right">Risco</p></th>
                 <th><p class="text-right">Retorno</p></th>
-                <th><p class="text-right">Entrada</th>
+                
                 -->
+                <th><p class="text-right">Quantidade</th>
+                
+                <th><p class="text-right">Data da compra</th>
+                  <th><p class="text-right">Data da venda</th>
+                
+                <th><p class="text-right">Preço compra</p></th>
                 <th><p class="text-right">Atual</p></th>
                 <th><p class="text-right">Valorização</p></th>
                 <th>Status</th>
@@ -123,6 +158,9 @@
               <% total = 0.0 %>
               <% @carteiras.each do |carteira| %>
                 <tr>
+                  <td><%= corretora_label(carteira.corretora) %></td>
+                  <td><%= tipo_de_operacao_label(carteira.tipo_de_operacao) %></td>
+                  
                   <td><%= carteira.empresa.ticker %></td>
                   <td><%= carteira.empresa.nome %></td>
                   <!-- <td><p class="text-right"><%= number_with_delimiter(carteira.quantidade, delimiter: ",") %></p></td>
@@ -135,6 +173,12 @@
                   <td><%= numero_para_porcentagem(carteira.retorno) %></td>
                   <td><p class="text-right"><%= number_to_currency_br carteira.entrada %></p></td>
                 -->
+                  <td class="text-right"><%= carteira.quantidade %></td>
+                  
+                  <td class="text-right"><%= carteira.data_da_compra.to_date.strftime('%d/%m/%Y') %></td>
+                  <td class="text-right"><%= carteira.data_da_venda&.to_date&.strftime('%d/%m/%Y') %></td>
+                  
+                  <td><p class="text-right"><%= number_to_currency_br carteira.entrada %></p></td>
                   <td><p class="text-right"><%= number_to_currency_br carteira.atual %></p></td>
                   <td><%= numero_para_porcentagem(carteira.valorizacao) %></td>
                   
@@ -162,6 +206,10 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th><th></th>
                 <th></th>
                 <th><p class="text-right"><%= number_to_currency_br total %></p></th>
                 <th></th>
@@ -197,7 +245,47 @@
       "hideMethod": "fadeOut"
     }
 
-    toastr.info("cotações", "Atualizado...")
+    $('.atualizacao-de-precos').on('click', function(){
+      toastr.info("cotações", "Atualizado...")
+    });
+
+    $('.carteira-filtro').select2({
+      placeholder: 'Data de encerramento',
+      allowClear: true
+    });
+
+    $('.carteira-filtro').on("select2:select", function (e) { 
+      alert('2');
+    });
+
+    // $('.carteira-filtro').on('click', function(){
+    //   if($(this).val() != '') {
+    //     window.location = '<%= carteiras_url %>?' + $(this).attr('name') + '=' + $(this).val();
+    //   }
+    // });
   });
   
 </script>
+
+<div class="modal inmodal" id="filtroModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight modal-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Fechar</span></button>
+                <i class="fa fa-gear modal-icon"></i>
+                <h4 class="modal-title">Filtro</h4>
+                <small class="font-bold"></small>
+            </div>
+            <div class="modal-body">
+                <p><strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                    remaining essentially unchanged.</p>
+                        <div class="form-group"><label>Sample Input</label> <input placeholder="Enter your email" class="form-control" type="email"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Aplicar</button>
+            </div>
+        </div>
+    </div>
+</div>

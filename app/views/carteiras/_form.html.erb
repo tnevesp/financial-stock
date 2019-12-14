@@ -14,17 +14,19 @@
 
               <div class="form-inputs">
                 <%= f.input :data_da_compra %>
+                <%= f.association :corretora, collection: Corretora.all %>
                 <%= f.association :empresa, collection: Empresa.all.order(:ticker => :asc) %>
+                <%= f.association :tipo_de_operacao, collection: TipoDeOperacao.all %>
                 <%= f.input :entrada %>
-                <%= f.input :alvo %>
-                <%= f.input :stop %>
                 <%= f.input :atual %>
                 <%= f.input :quantidade %>
+                <%= f.input :observacao, as: :text %>
                 <%= f.collection_radio_buttons :situacao, [['em_andamento', 'Em andamento'] ,['encerrado', 'Encerrado']], :first, :last, checked: (f.object.situacao || 'em_andamento') do |b| %>
                   <div class="radio radio-primary radio-inline">
                     <%= b.radio_button + b.label %>
                   </div>
                 <% end %>
+
                 <%= f.input :data_da_venda, input_html: { disabled: (f.object.em_andamento?) } %>
               </div>
 

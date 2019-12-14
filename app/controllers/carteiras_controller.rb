@@ -8,9 +8,12 @@ class CarteirasController < ApplicationController
       @carteiras = Carteira.joins(:empresa).where(situacao: 'em_andamento').order('empresas.ticker asc, carteiras.data_da_compra asc')
     elsif params[:situacao] == 'todos'
       @carteiras = Carteira.all.order(data_da_compra: :asc, id: :desc)
+      @carteiras = Carteira.joins(:empresa).where(['empresas.ticker = ?', 'PETR4'])
     else
       # .where(["to_char(data_da_venda, 'MM/YYYY') = ?", "01/2018"])
-      @carteiras = Carteira.where(situacao: params[:situacao]).order(data_da_compra: :asc, id: :desc)
+      @carteiras = Carteira.where(situacao: params[:situacao]).joins(:empresa)#.where(['empresas.ticker = ?', 'PETR4']) #.where(["to_char(data_da_venda, 'MM/YYYY') = ?", "03/2018"])
+      @carteiras = @carteiras.where(["to_char(data_da_venda, 'MM/YYYY') = ?", params[:filtro]['data_de_encerramento'] ]) if params[:filtro] && params[:filtro]['data_de_encerramento']
+      @carteiras.order(data_da_venda: :asc, id: :desc)
     end
   end
 
@@ -67,6 +70,11 @@ class CarteirasController < ApplicationController
     end
   end
 
+  def atualizar_precos
+    AtualizacaoDePrecoService.executar
+    redirect_to carteiras_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_carteira
@@ -76,6 +84,6 @@ class CarteirasController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def carteira_params
       params[:carteira].merge!(user_id: current_user.id)
-      params.require(:carteira).permit(:data_da_compra, :empresa_id, :entrada, :alvo, :stop, :atual, :quantidade, :user_id, :data_da_venda, :situacao)
+      params.require(:carteira).permit(:data_da_compra, :empresa_id, :entrada, :alvo, :stop, :atual, :quantidade, :user_id, :data_da_venda, :situacao, :corretora_id, :tipo_de_operacao_id, :observacao)
     end
 end

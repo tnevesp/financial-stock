@@ -16,4 +16,16 @@
  *= require font-awesome
  *= require awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css
  *= require toastr/toastr.min.css
+ *= require select2/select2.min
  */
+
+
+.label-xp, .badge-xp {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.label-bb, .badge-bb {
+  background-color: #FFF200;
+  color: #FFFFFF;
+}

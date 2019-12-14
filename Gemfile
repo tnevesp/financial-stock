@@ -65,3 +65,6 @@ gem 'simple_form', '~> 3.4'
 gem 'state_machines', '~> 0.5.0'
 
 gem 'sidekiq'
+
+# Google Finance web API ruby client with support for retrieving stock quotes and historical prices.
+gem 'google-finance-ruby-client', '~> 0.2.1'
