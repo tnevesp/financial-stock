@@ -1,0 +1,240 @@
+<% tickers = Carteira.em_andamento.map { |c| c.empresa.ticker }.uniq.sort %>
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <%= tickers.each do |ticker| %>
+        <div class="col-lg-3">
+          <div class="contact-box center-version">
+
+            <a href="profile.html">
+
+                <%= image_tag 'profile_small.png', class: 'rounded-circle' %>
+
+
+                <h3 class="m-b-xs"><strong><%= ticker %></strong></h3>
+
+                <div class="font-bold">Anima Holding SA</div>
+
+                <h1>
+                  <p class="text-navy"><strong>+ 4,25%</strong></p>
+                </h1>
+
+            </a>
+            <div class="contact-box-footer">
+                <div class="m-t-xs btn-group">
+                    <a href="" class="btn btn-xs btn-white"><i class="fa fa-phone"></i> Call </a>
+                    <a href="" class="btn btn-xs btn-white"><i class="fa fa-envelope"></i> Email</a>
+                    <a href="" class="btn btn-xs btn-white"><i class="fa fa-user-plus"></i> Follow</a>
+                </div>
+            </div>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+  
+  'use strict';
+
+window.chartColors = {
+  red: 'rgb(255, 99, 132)',
+  orange: 'rgb(255, 159, 64)',
+  yellow: 'rgb(255, 205, 86)',
+  green: 'rgb(75, 192, 192)',
+  blue: 'rgb(54, 162, 235)',
+  purple: 'rgb(153, 102, 255)',
+  grey: 'rgb(201, 203, 207)'
+};
+
+(function(global) {
+  var Months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  var COLORS = [
+    '#4dc9f6',
+    '#f67019',
+    '#f53794',
+    '#537bc4',
+    '#acc236',
+    '#166a8f',
+    '#00a950',
+    '#58595b',
+    '#8549ba'
+  ];
+
+  var Samples = global.Samples || (global.Samples = {});
+  var Color = global.Color;
+
+}(this));
+
+</script>
+<div class="wrapper wrapper-content">
+
+  <div class="row">
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Polar Area</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="text-center">
+                    <canvas id="polarChart" height="140"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Pie </h5>
+            </div>
+            <div class="ibox-content">
+                <div>
+                    <canvas id="doughnutChart" height="140"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<% content_for :javascript do %>
+
+<script type="text/javascript">
+
+
+
+    var randomScalingFactor = function() {
+      return Math.round(Math.random() * 100);
+    };
+
+    var chartColors = window.chartColors;
+    var color = Chart.helpers.color;
+    var config = {
+      data: {
+        datasets: [{
+          data: [
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+          ],
+          backgroundColor: [
+            color(chartColors.red).alpha(0.5).rgbString(),
+            color(chartColors.orange).alpha(0.5).rgbString(),
+            color(chartColors.yellow).alpha(0.5).rgbString(),
+            color(chartColors.green).alpha(0.5).rgbString(),
+            color(chartColors.blue).alpha(0.5).rgbString(),
+          ],
+          label: 'My dataset' // for legend
+        }],
+        labels: [
+          'Red',
+          'Orange',
+          'Yellow',
+          'Green',
+          'Blue'
+        ]
+      },
+      options: {
+        responsive: true,
+        legend: {
+          position: 'right',
+        },
+        title: {
+          display: true,
+          text: 'Chart.js Polar Area Chart'
+        },
+        scale: {
+          ticks: {
+            beginAtZero: true
+          },
+          reverse: false
+        },
+        animation: {
+          animateRotate: false,
+          animateScale: true
+        }
+      }
+    };
+    // ------------------------------
+
+    var config = {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: [
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+          ],
+          backgroundColor: [
+            window.chartColors.red,
+            window.chartColors.orange,
+            window.chartColors.yellow,
+            window.chartColors.green,
+            window.chartColors.blue,
+          ],
+          label: 'Dataset 1'
+        }],
+        labels: [
+          'Red',
+          'Orange',
+          'Yellow',
+          'Green',
+          'Blue'
+        ]
+      },
+      options: {
+        responsive: true,
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Chart.js Doughnut Chart'
+        },
+        animation: {
+          animateScale: true,
+          animateRotate: true
+        }
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('doughnutChart').getContext('2d');
+      window.myDoughnut = new Chart(ctx, config);
+
+      var ctx = document.getElementById('polarChart');
+      window.myPolarArea = Chart.PolarArea(ctx, config);
+    };
+  </script>
+
+<% end %>
+
+
+
+
+
+
+
+select empresa_id, count(id) as posicoes, sum(entrada) as entrada, ( (349198.00 - sum(entrada))/sum(entrada)) * 100 ) as peso from (
+select empresa_id, id, (entrada * (quantidade/100)) as entrada from carteiras where situacao = 'em_andamento') as posicoes_das_entradas group by empresa_id;

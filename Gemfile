@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '2.6.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
@@ -46,3 +46,25 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Flexible authentication solution for Rails with Warden
+gem 'devise', '~> 4.2'
+
+# font-awesome-rails provides the Font-Awesome web fonts and stylesheets as a Rails engine for use with the asset pipeline.
+gem 'font-awesome-rails', '~> 4.7'
+
+# bootstrap-sass is a Sass-powered version of Bootstrap 3, ready to drop right into your Sass powered applications.
+gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
+
+# A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions: get, put, post, delete.
+gem 'rest-client', '~> 2.0'
+
+
+gem 'simple_form', '~> 3.4'
+
+gem 'state_machines', '~> 0.5.0'
+
+gem 'sidekiq'
+
+# Google Finance web API ruby client with support for retrieving stock quotes and historical prices.
+gem 'google-finance-ruby-client', '~> 0.2.1'

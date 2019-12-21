@@ -1,0 +1,291 @@
+<style type="text/css">
+  
+
+.label-xp, .badge-xp {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.label-bb, .badge-bb {
+  background-color: #FFF200;
+  color: #004486;
+}
+</style>
+<div class="wrapper wrapper-content">
+
+  <div class="row">
+      <div class="col-lg-6">
+          <div class="chartjs-begining" id="chartjs-5">
+            
+          </div>
+      </div>
+      <div class="col-lg-6">
+      
+      </div>
+  </div>
+
+  <script>new Chart(document.getElementById("chartjs-5"),{"type":"polarArea","data":{"labels":["Red","Green","Yellow","Grey","Blue"],"datasets":[{"label":"My First Dataset","data":[11,16,7,3,14],"backgroundColor":["rgb(255, 99, 132)","rgb(75, 192, 192)","rgb(255, 205, 86)","rgb(201, 203, 207)","rgb(54, 162, 235)"]}]}});</script>
+
+  <div class="row">
+      <div class="col-lg-3">
+          <div class="ibox float-e-margins">
+              <div class="ibox-title">
+                  <span class="label label-primary pull-right">Today</span>
+                  <h5>Encerradas</h5>
+              </div>
+              <div class="ibox-content">
+                  <h1 class="no-margins">22 285,400</h1>
+                  <div class="stat-percent font-bold text-navy">20% <i class="fa fa-level-up"></i></div>
+                  <small>New orders</small>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-3">
+          <div class="ibox float-e-margins">
+              <div class="ibox-title">
+                  <span class="label label-info pull-right">Monthly</span>
+                  <h5>Orders</h5>
+              </div>
+              <div class="ibox-content">
+                  <h1 class="no-margins">60 420,600</h1>
+                  <div class="stat-percent font-bold text-info">40% <i class="fa fa-level-up"></i></div>
+                  <small>New orders</small>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-6">
+          <div class="ibox float-e-margins">
+              <div class="ibox-title">
+                  <span class="label label-primary pull-right">Today</span>
+                  <h5>Rendimentos</h5>
+              </div>
+              <div class="ibox-content">
+
+                  <div class="row">
+                      <div class="col-md-4">
+                          <h1 class="no-margins"><%= valor_do_rendimento_em_andamento %></h1>
+                          <div class="font-bold text-navy"><%= porcentagem_do_rendimento_em_andamento %> <i class="fa fa-level-up"></i> <small>Em andamento</small></div>
+                      </div>
+                      <div class="col-md-4">
+                          <h1 class="no-margins"><%= valor_do_rendimento_encerrado %></h1>
+                          <div class="font-bold text-navy"><%= porcentagem_do_rendimento_encerrado %> <i class="fa fa-level-up"></i> <small>Encerradas</small></div>
+                      </div>
+                      <div class="col-md-4">
+                          <h1 class="no-margins"><%= valor_do_rendimento_geral %></h1>
+                          <div class="font-bold text-navy"><%= porcentagem_do_rendimento_geral %> <i class="fa fa-level-up"></i> <small>Total</small></div>
+                      </div>
+                  </div>
+
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="row">
+
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t(:carteira) %></h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li>
+                  <%= link_to 'Atualizar preços', atualizar_precos_carteiras_path, { class: 'atualizacao-de-precos' } %>
+                </li>
+                <li>
+                  <%= link_to 'Filtrar', '#', { 'data-toggle' => 'modal', 'data-target' => '#filtroModal' } %>
+                </li>
+            </ul>
+            <a class="close-link">
+                <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+        <div class="ibox-content">
+          <div class="row">
+            <div class="col-sm-9 m-b-xs">
+              <div data-toggle="buttons" class="btn-group">
+                <label class="btn btn-sm btn-white <%= 'active' if params[:situacao].nil? || params[:situacao] == 'em_andamento' %>"> <input type="radio" id="filtro_situacao_em_andamento" name="filtro[situacao]" value="em_andamento"><%= t(:em_andamento) %></label>
+                <label class="btn btn-sm btn-white <%= 'active' if params[:situacao] == 'encerrado' %>"> <input type="radio" id="filtro_situacao_encerrado" name="filtro[situacao]" value="encerrado"><%= t(:encerrado) %></label>
+                <label class="btn btn-sm btn-white <%= 'active' if params[:situacao] == 'todos' %>"> <input type="radio" id="filtro_situacao_todos" name="filtro[situacao]" value="todos"><%= t(:todos) %></label>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <%= select_tag 'filtro[data_de_encerramento]', options_for_select(option_from_collection_for_select_data), { include_blank: 'Data de encerramento', class: 'carteira-filtro form-control' } %>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                
+                <th></th>
+                <th></th>
+                <th>Ticker</th>
+                <th>Empresa</th>
+                <!-- <th><p class="text-right">Quantidade</p></th>
+                
+                <th><p class="text-right">Stop</p></th>
+                <th><p class="text-right">Alvo</p></th>
+                
+                
+                <th><p class="text-right">Risco</p></th>
+                <th><p class="text-right">Retorno</p></th>
+                
+                -->
+                <th><p class="text-right">Quantidade</th>
+                
+                <th><p class="text-right">Data da compra</th>
+                  <th><p class="text-right">Data da venda</th>
+                
+                <th><p class="text-right">Preço compra</p></th>
+                <th><p class="text-right">Atual</p></th>
+                <th><p class="text-right">Valorização</p></th>
+                <th>Status</th>
+                <th><p class="text-right">Retorno</p></th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% total = 0.0 %>
+              <% @carteiras.each do |carteira| %>
+                <tr>
+                  <td><%= corretora_label(carteira.corretora) %></td>
+                  <td><%= tipo_de_operacao_label(carteira.tipo_de_operacao) %></td>
+                  
+                  <td><%= carteira.empresa.ticker %></td>
+                  <td><%= carteira.empresa.nome %></td>
+                  <!-- <td><p class="text-right"><%= number_with_delimiter(carteira.quantidade, delimiter: ",") %></p></td>
+                  
+                  <td><p class="text-right"><%= number_to_currency_br carteira.stop %></p></td>
+                  <td><p class="text-right"><%= number_to_currency_br carteira.alvo %></p></td>
+                  
+                  
+                  <td><%= numero_para_porcentagem(carteira.risco) %></td>
+                  <td><%= numero_para_porcentagem(carteira.retorno) %></td>
+                  <td><p class="text-right"><%= number_to_currency_br carteira.entrada %></p></td>
+                -->
+                  <td class="text-right"><%= carteira.quantidade %></td>
+                  
+                  <td class="text-right"><%= carteira.data_da_compra.to_date.strftime('%d/%m/%Y') %></td>
+                  <td class="text-right"><%= carteira.data_da_venda&.to_date&.strftime('%d/%m/%Y') %></td>
+                  
+                  <td><p class="text-right"><%= number_to_currency_br carteira.entrada %></p></td>
+                  <td><p class="text-right"><%= number_to_currency_br carteira.atual %></p></td>
+                  <td><%= numero_para_porcentagem(carteira.valorizacao) %></td>
+                  
+                    <td>
+                      <span class="label <%= 'label-success' if carteira.em_andamento? %>"><%= t(carteira.situacao.to_sym) %></span>
+                    </td>
+                  <td><p class="text-right"><%= number_to_currency_br carteira.ganho %></p></td>
+                  <% total += carteira.ganho %>
+                  <td>
+                    <%= link_to edit_carteira_path(carteira), { class: 'btn btn-white btn-sm' } do %>
+                      <i class="fa fa-pencil"></i> Editar </a>                      
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+              <tfoot>
+                <!-- <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th> -->
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th><th></th>
+                <th></th>
+                <th><p class="text-right"><%= number_to_currency_br total %></p></th>
+                <th></th>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('.btn-sm').on('click', function(){
+    window.location.replace('/?situacao=' + $(this).find('input[name="filtro[situacao]"]').val());
+  });
+
+  $(document).ready(function(){
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "progressBar": false,
+      "preventDuplicates": true,
+      "positionClass": "toast-top-center",
+      "onclick": null,
+      "showDuration": "4000",
+      "hideDuration": "1000",
+      "timeOut": "7000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+
+    $('.atualizacao-de-precos').on('click', function(){
+      toastr.info("cotações", "Atualizado...")
+    });
+
+    $('.carteira-filtro').select2({
+      placeholder: 'Data de encerramento',
+      allowClear: true
+    });
+
+    $('.carteira-filtro').on("select2:select", function (e) { 
+      alert('2');
+    });
+
+    // $('.carteira-filtro').on('click', function(){
+    //   if($(this).val() != '') {
+    //     window.location = '<%= carteiras_url %>?' + $(this).attr('name') + '=' + $(this).val();
+    //   }
+    // });
+  });
+  
+</script>
+
+<div class="modal inmodal" id="filtroModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight modal-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Fechar</span></button>
+                <i class="fa fa-gear modal-icon"></i>
+                <h4 class="modal-title">Filtro</h4>
+                <small class="font-bold"></small>
+            </div>
+            <div class="modal-body">
+                <p><strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                    remaining essentially unchanged.</p>
+                        <div class="form-group"><label>Sample Input</label> <input placeholder="Enter your email" class="form-control" type="email"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Aplicar</button>
+            </div>
+        </div>
+    </div>
+</div>

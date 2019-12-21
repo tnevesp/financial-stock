@@ -1,0 +1,2 @@
+json.extract! carteira, :id, :data_da_compra, :empresa_id, :entrada, :alvo, :stop, :atual, :quatidade, :situacao, :total_da_compra, :total_da_venda, :created_at, :updated_at
+json.url carteira_url(carteira, format: :json)

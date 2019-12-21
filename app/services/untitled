@@ -1,0 +1,17 @@
+
+
+select tipo_de_movimentacao, corretora, ticker, nome, quantidade, data_da_movimentacao from (
+
+select 'compra' tipo_de_movimentacao, co.nome corretora, e.ticker, e.nome, c.quantidade, c.data_da_compra as data_da_movimentacao from carteiras c
+inner join empresas e on e.id = c.empresa_id
+inner join corretoras co on co.id = c.corretora_id
+where e.ticker = 'MOVI3'
+union all
+select 'venda' tipo_de_movimentacao, co.nome corretora, e.ticker, e.nome, c.quantidade, c.data_da_venda as data_da_movimentacao from carteiras c
+inner join empresas e on e.id = c.empresa_id
+inner join corretoras co on co.id = c.corretora_id
+where e.ticker = 'MOVI3'
+and data_da_venda is not null
+) as c 
+where corretora = 'Banco do Brasil'
+order by data_da_movimentacao asc;

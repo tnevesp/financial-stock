@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Data da compra:</strong>
+  <%= @carteira.data_da_compra %>
+</p>
+
+<p>
+  <strong>Empresa:</strong>
+  <%= @carteira.empresa %>
+</p>
+
+<p>
+  <strong>Entrada:</strong>
+  <%= @carteira.entrada %>
+</p>
+
+<p>
+  <strong>Alvo:</strong>
+  <%= @carteira.alvo %>
+</p>
+
+<p>
+  <strong>Stop:</strong>
+  <%= @carteira.stop %>
+</p>
+
+<p>
+  <strong>Atual:</strong>
+  <%= @carteira.atual %>
+</p>
+
+<p>
+  <strong>Quantidade:</strong>
+  <%= @carteira.quantidade %>
+</p>
+
+<p>
+  <strong>Situacao:</strong>
+  <%= @carteira.situacao %>
+</p>
+
+<p>
+  <strong>Total da compra:</strong>
+  <%= @carteira.total_da_compra %>
+</p>
+
+<p>
+  <strong>Total da venda:</strong>
+  <%= @carteira.total_da_venda %>
+</p>
+
+<%= link_to 'Edit', edit_carteira_path(@carteira) %> |
+<%= link_to 'Back', carteiras_path %>

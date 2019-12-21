@@ -20,4 +20,16 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  ano: 'Ano'
+  carteira: 'Carteira'
+  dia: 'Dia'
+  mes: 'Mês'
+  ativo: 'Ativo'
+  compra: 'Compra'
+  atual: 'Atual'
+  quantidade: 'Quant.'
+  porcentagem: '%'
+  total: 'Total'
+  em_andamento: 'Em andamento'
+  encerrado: 'Encerrado'
+  todos: 'Todos'
