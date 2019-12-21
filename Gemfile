@@ -60,7 +60,7 @@ gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 gem 'rest-client', '~> 2.0'
 
 
-gem 'simple_form', '~> 3.4'
+gem 'simple_form', '~> 5.0'
 
 gem 'state_machines', '~> 0.5.0'
 
